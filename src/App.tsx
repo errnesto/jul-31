@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import { csvParse } from 'd3'
+const tz = require('timezone')
+const berlinTimeZoneDefinitions = require('timezone/Europe/Berlin')
+const berlinTime = tz(berlinTimeZoneDefinitions, 'Europe/Berlin')
+
+
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const inital: Array<{ date: Date, temperature: number }> = []
+  const [temperatures, setTemperatures] = useState(inital)
+
+  useEffect(() => {
+    async function fetchData () {
+      const res = await fetch('./data.csv')
+      const text = await res.text()
+      const data: any = csvParse(text)
+
+      setTemperatures(data)
+    }
+    fetchData()
+  }, [])
+
+  return <>
+    {temperatures.map(row => <p>{row.date} || {berlinTime(row.date, '%y %m %d -- %H')}, {row.temperature}</p>)}
+  </>
 }
 
-export default App;
+export default App

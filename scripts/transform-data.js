@@ -26,7 +26,7 @@ const juli31hourlyTemperatures = hourlyData
     return { date, temperature }
   })
   .filter(row => berlinTime(row.date, '%d.%m') === '31.07')
-  .map(row => ({ ...row, date: new Date(row.date) }))
+  .map(row => ({ ...row, date: new Date(row.date).toISOString() }))
 
 const csv = d3.csvFormat(juli31hourlyTemperatures)
 
