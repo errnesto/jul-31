@@ -18,7 +18,7 @@ const Dots: React.FC<Props> = (props) => {
       const unshiftedX = v.hour * dotSize + dotSize / 2
       const x = isEvenLine ? unshiftedX : unshiftedX + dotSize / 2
       const y = dotSize * v.line + dotSize / 2
-      const r = v.temperature * 0.7
+      const r = v.line
 
       return <circle
         key={i}

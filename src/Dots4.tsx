@@ -1,6 +1,6 @@
 import React from 'react'
 import Chroma from 'chroma-js'
-import { interpolateRdPu } from 'd3-scale-chromatic'
+import { interpolateSpectral } from 'd3-scale-chromatic'
 
 const dayNight = Chroma.scale(['#0d0887', '#bb3488', '#dd5e66', '#fdc327']).domain([0, 0.2, 0.3, 1])
 
@@ -18,14 +18,15 @@ const Dots: React.FC<Props> = (props) => {
       const unshiftedX = v.hour * dotSize + dotSize / 2
       const x = isEvenLine ? unshiftedX : unshiftedX + dotSize / 2
       const y = dotSize * v.line + dotSize / 2
-      const r = v.temperature * 0.7
+      const r = Math.sqrt(v.line) * 4
 
       return <circle
         key={i}
         cx={x}
         cy={y}
         r={r}
-        fill={interpolateRdPu(v.temperature / 35)}/>
+        stroke={'#aaa'}
+        fill={interpolateSpectral(1 - ((v.temperature - 10) / 25))}/>
     })}
   </svg>
 }

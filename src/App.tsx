@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { csvParse } from 'd3'
 import Dots from 'Dots'
+import Dots2 from 'Dots2'
+import Dots3 from 'Dots3'
+import Dots4 from 'Dots4'
 
 const tz = require('timezone')
 const berlinTimeZoneDefinitions = require('timezone/Europe/Berlin')
