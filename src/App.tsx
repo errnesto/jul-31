@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { csvParse } from 'd3'
+import Dots from 'Dots'
+
 const tz = require('timezone')
 const berlinTimeZoneDefinitions = require('timezone/Europe/Berlin')
 const berlinTime = tz(berlinTimeZoneDefinitions, 'Europe/Berlin')
@@ -21,9 +23,13 @@ const App: React.FC = () => {
     fetchData()
   }, [])
 
-  return <>
-    {temperatures.map(row => <p>{row.date} || {berlinTime(row.date, '%y %m %d -- %H')}, {row.temperature}</p>)}
-  </>
+  const hourlyData = temperatures.map(row => ({
+    hour: +berlinTime(row.date, '%H'),
+    line: +berlinTime(row.date, '%Y') - 1995,
+    temperature: row.temperature
+  }))
+
+  return <Dots hourlyData={hourlyData} />
 }
 
 export default App
