@@ -12,7 +12,7 @@ const berlinTime = tz(berlinTimeZoneDefinitions, 'Europe/Berlin')
 
 
 const App: React.FC = () => {
-  const inital: Array<{ date: Date, temperature: number }> = []
+  const inital: Array<{ date: string, temperature: string, windSpeed: string, rain: string, sunshine: string }> = []
   const [temperatures, setTemperatures] = useState(inital)
 
   useEffect(() => {
@@ -29,7 +29,10 @@ const App: React.FC = () => {
   const hourlyData = temperatures.map(row => ({
     hour: +berlinTime(row.date, '%H'),
     line: +berlinTime(row.date, '%Y') - 1995,
-    temperature: row.temperature
+    windSpeed: parseFloat(row.windSpeed),
+    rain: parseFloat(row.rain),
+    temperature: parseFloat(row.temperature),
+    sunshine: parseFloat(row.sunshine)
   }))
 
   return <Dots hourlyData={hourlyData} />
