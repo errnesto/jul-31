@@ -28,7 +28,7 @@ const App: React.FC = () => {
 
   const hourlyData = temperatures.map(row => ({
     hour: +berlinTime(row.date, '%H'),
-    line: +berlinTime(row.date, '%Y') - 1995,
+    line: +berlinTime(row.date, '%Y') - 1992,
     windSpeed: parseFloat(row.windSpeed),
     rain: parseFloat(row.rain),
     temperature: parseFloat(row.temperature),

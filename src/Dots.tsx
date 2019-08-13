@@ -28,7 +28,7 @@ const Dots: React.FC<Props> = (props) => {
   ))
 
   const dotSize = 45
-  return <svg viewBox={`0 0 ${dotSize * 24 + dotSize / 2} ${dotSize * 27}`} width='100%' height='100%'>
+  return <svg viewBox={`0 0 ${dotSize * 24 + dotSize / 2} ${dotSize * 28}`} width='100%' height='100%'>
     <defs>
       {windSpeeds.map(speed =>
         <filter id={`wind${speed}`} x='0%' y='0%' width='100' height='100'>
@@ -52,8 +52,20 @@ const Dots: React.FC<Props> = (props) => {
       const rainFilter = rainHeight === 0 ? '' : `url(#rain${rainHeight})`
       const unshiftedX = v.hour * dotSize + dotSize / 2
       const x = isEvenLine ? unshiftedX : unshiftedX + dotSize / 2
-      const y = dotSize * v.line + dotSize / 2
+      const y = dotSize * 0.9 * v.line + dotSize / 2
       const r = v.temperature * 0.6
+
+      if (isNaN(r)) {
+        return <rect
+          x={x}
+          y={y - 8}
+          width='15'
+          height='15'
+          transform={`rotate(45, ${x}, ${y - 8})`}
+          fill={interpolateRdPu(1.5 - (sunshine / 80 + 0.5) / 1.5)}
+          filter={windFilter}
+         />
+      }
 
       return <g filter={rainFilter}>
         <circle

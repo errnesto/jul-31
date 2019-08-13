@@ -53,7 +53,15 @@ const juli31hourlyValues =
   }))
   .filter(row => berlinTime(row.timestamp, '%d.%m') === '31.07')
 
-let alljuli31Values = juli31hourlyValues
+const emptyDatasets = [
+  ...Array(24).fill(null).map((_, i) => ({ timestamp: tz([1992, 7, 31, i]) })),
+  ...Array(24).fill(null).map((_, i) => ({ timestamp: tz([1993, 7, 31, i]) })),
+  ...Array(24).fill(null).map((_, i) => ({ timestamp: tz([1994, 7, 31, i]) }))
+]
+
+console.log(emptyDatasets)
+
+let alljuli31Values = [...emptyDatasets, ...juli31hourlyValues]
   .reduce((obj, row) => {
     obj[row.timestamp] = { temperature: row.temperature, date: new Date(row.timestamp).toISOString() }
     return obj
